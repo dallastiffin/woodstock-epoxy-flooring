@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# PLACEHOLDER DOMAIN - update before launch
+Sitemap: https://woodstockepoxyflooring.com/sitemap.xml

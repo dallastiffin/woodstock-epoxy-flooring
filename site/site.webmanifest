@@ -1,0 +1,14 @@
+{
+  "name": "Woodstock Epoxy Flooring",
+  "short_name": "Woodstock Epoxy",
+  "description": "Epoxy flooring, garage floor coating and polyaspartic systems in Woodstock, Ontario.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#14181d",
+  "icons": [
+    { "src": "images/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "images/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "images/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

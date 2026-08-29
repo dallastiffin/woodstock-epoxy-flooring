@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+
+# Cloudflare / wrangler local state
+.wrangler/
+node_modules/
+
+# Note: the master *.png photos ARE tracked on purpose. They are the
+# originals that build.py --images reworks into site/images/. They are
+# never served to visitors because only site/ is deployed.
+
+# Scratch photo-inspection contact sheets made during the build, not part of the site
+_audit/
