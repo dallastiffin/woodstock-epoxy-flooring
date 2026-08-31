@@ -122,19 +122,25 @@ def public_url(slug):
 def esc(s):
     return html.escape(s, quote=False)
 
-INLINE_LINK_RE = re.compile(r'\[([^\]]+)\]\(([^)]+)\)')
+INLINE_LINK_RE = re.compile(r'\[([^\]]+)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)')
 
 def rich(text):
     """Render prose, escaping normally but converting exactly [text](url)
     into a real link. Internal targets use the same 'slug.html' / 'index.html'
     convention as every other link in this file, so rewrite_links() turns them
-    into the extensionless form Cloudflare serves at write time."""
+    into the extensionless form Cloudflare serves at write time.
+
+    An optional quoted title of "nf" marks a partner-network backlink as
+    rel="nofollow" - used for the cross-category industry backlink program
+    (Aug 2026) so the least editorially-central links don't pass ranking
+    signal. Same-category links and normal internal links are untouched."""
     out = []
     pos = 0
     for m in INLINE_LINK_RE.finditer(text):
         out.append(esc(text[pos:m.start()]))
-        label, url = m.group(1), m.group(2)
-        out.append('<a href="%s">%s</a>' % (esc(url), esc(label)))
+        label, url, title = m.group(1), m.group(2), m.group(3)
+        rel = ' rel="nofollow"' if title == "nf" else ""
+        out.append('<a href="%s"%s>%s</a>' % (esc(url), rel, esc(label)))
         pos = m.end()
     out.append(esc(text[pos:]))
     return "".join(out)
@@ -675,6 +681,16 @@ def footer():
           <li><a href="about.html">About Us</a></li>
           <li><a href="faq.html">FAQ</a></li>
           <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-labelledby="footer-guides-heading">
+        <h3 id="footer-guides-heading">Guides</h3>
+        <ul class="footer-list">
+          <li><a href="epoxy-flooring-climate-considerations.html">Regional Guide</a></li>
+          <li><a href="freeze-thaw-pricing-timelines.html">Seasonal Pricing Guide</a></li>
+          <li><a href="garage-overhaul-planning.html">Garage Project Planning</a></li>
+          <li><a href="protecting-coated-floors-exterior-work.html">Protecting Your Floor</a></li>
         </ul>
       </nav>
 
@@ -1670,6 +1686,56 @@ legal_page(
     ])
 
 # ============================================================================
+#  RESOURCE GUIDES  (added for the industry backlink program, Aug 2026)
+#  Four extra blocks appended to the end of the content file, after SITE
+#  COPY, so the original block indices above are untouched. Each guide is a
+#  plain content-block page reusing head()/header()/footer() like every
+#  other page here.
+# ============================================================================
+GUIDE_PAGES = [
+    ("epoxy-flooring-climate-considerations.html", COPY_BLOCK_INDEX + 1, "Regional Guide"),
+    ("freeze-thaw-pricing-timelines.html",          COPY_BLOCK_INDEX + 2, "Seasonal Pricing Guide"),
+    ("garage-overhaul-planning.html",               COPY_BLOCK_INDEX + 3, "Garage Project Planning"),
+    ("protecting-coated-floors-exterior-work.html", COPY_BLOCK_INDEX + 4, "Protecting Your Floor"),
+]
+
+def guide_page(slug, block_index, nav_label):
+    h1, secs = parsed[block_index]
+    crumbs, crumb_ld = breadcrumbs([("Home", "index.html"), (h1, None)])
+    blocks = "".join(content_block(s) for s in secs)
+    page = head(h1, f"{h1} - {BUSINESS}, {CITY_PROV}.", slug, crumb_ld)
+    page += header(slug)
+    page += crumbs
+    page += f"""
+<main id="main">
+<section class="hero hero--page" aria-labelledby="hero-heading">
+  <div class="container hero__inner">
+    <div class="hero__intro">
+      <span class="eyebrow" style="color:#ffb37a;">{esc(nav_label)}</span>
+      <h1 id="hero-heading">{esc(h1)}</h1>
+    </div>
+  </div>
+</section>
+<section class="section" aria-labelledby="guide-heading">
+  <div class="container">
+    <h2 id="guide-heading" class="visually-hidden">{esc(h1)}</h2>
+    <div class="layout-split">
+      <div class="prose">
+{blocks}      </div>
+{SIDEBAR}
+    </div>
+  </div>
+</section>
+{contact_form(h1)}
+</main>
+"""
+    page += footer()
+    write(slug, page)
+
+for slug, idx, label in GUIDE_PAGES:
+    guide_page(slug, idx, label)
+
+# ============================================================================
 #  PLACEHOLDER IMAGES  (lightweight inline SVG so the site is never broken)
 # ============================================================================
 # Logo, favicon and social images are all real artwork now, produced from
@@ -1680,7 +1746,7 @@ legal_page(
 # ============================================================================
 # privacy-policy and terms are noindex, so they are deliberately absent here
 all_pages = ["index.html", "services.html"] + [s for s, _, _ in SERVICE_PAGES] + \
-            ["about.html", "faq.html", "contact.html"]
+            ["about.html", "faq.html", "contact.html"] + [s for s, _, _ in GUIDE_PAGES]
 urls = "\n".join(
     f"""  <url>
     <loc>{DOMAIN}{public_url(p)}</loc>
