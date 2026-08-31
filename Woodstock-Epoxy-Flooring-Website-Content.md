@@ -130,6 +130,10 @@ We work out of Woodstock and cover the rest of Oxford County alongside it, inclu
 
 We install epoxy flooring to the same standard whether the address is in town or out past Innerkip. No matter where the job is, the approach stays the same: walk the space, test the slab, and put a firm number in writing before anything is booked. [Contact us](contact.html) with your address to confirm it is in range.
 
+## How Other Epoxy Flooring Crews Handle Ontario's Freeze-Thaw Belt
+
+We keep an eye on how other independent shops handle the same climate problems, since a coating that fails in Alberta or the Maritimes for a different reason than it would here still teaches you something about margins of error. For homeowners comparing notes across the region, [epoxy flooring contractors in Airdrie, Alberta](https://airdrieepoxyflooring.com) are solving for chinook-driven thermal swings rather than road salt, while [epoxy flooring services in Caledon](https://www.caledonepoxyflooring.com) deal with the same Southern Ontario freeze-thaw pattern plus Niagara Escarpment drainage quirks. Further east, [epoxy flooring installers in Cape Breton](https://capebretonepoxyflooring.com) work around coastal humidity more than cold snaps, and [Chatham epoxy flooring specialists](https://chathamepoxyflooring.com) see the same Lake Erie-influenced booking calendar and brine exposure Woodstock does. It's a reminder that "epoxy flooring" isn't one uniform product; the prep and cure schedule has to answer to whatever the local slab and climate are actually doing.
+
 ## Frequently Asked Questions
 
 ### Is epoxy flooring a good fit for a Woodstock garage built before 1980?
@@ -802,7 +806,7 @@ Road salt is the big one. Every vehicle that pulls into a Woodstock garage in Ja
 
 ### Reading What Other Regions Do Differently
 
-It's worth looking outside Ontario to see how differently the same trade gets approached elsewhere. [Airdrie Epoxy Flooring](https://airdrieepoxyflooring.com) works against Alberta's chinook pattern, where a slab can swing from -20°C to above freezing in a single afternoon; that kind of rapid thermal cycling puts different stress on an epoxy bond than Ontario's slower seasonal freeze does, and it changes how much cure time a crew builds into a winter install. Closer to home, [Caledon Epoxy Flooring](https://www.caledonepoxyflooring.com) is working the same general Southern Ontario freeze-thaw pattern Woodstock sees, just with the added complication of the Niagara Escarpment's drainage and grading affecting how water moves around a foundation before it ever reaches the garage slab.
+It's worth looking outside Ontario to see how differently the same trade gets approached elsewhere. A chinook climate like Alberta's sees a slab swing from -20°C to above freezing in a single afternoon; that kind of rapid thermal cycling puts different stress on an epoxy bond than Ontario's slower seasonal freeze does, and it changes how much cure time a crew builds into a winter install. Closer to home, other Southern Ontario garages sit on the same general freeze-thaw pattern Woodstock sees, just with local wrinkles, like the Niagara Escarpment's drainage and grading, that change how water moves around a foundation before it ever reaches the garage slab.
 
 None of this is a reason to delay a coating project, it is a reason to ask a contractor how they are accounting for your specific slab and climate before they start grinding.
 
@@ -822,7 +826,7 @@ Pricing on a coated floor is driven mostly by square footage, slab condition, an
 
 ## Comparing Notes With Other Climates
 
-[Cape Breton Epoxy Flooring](https://capebretonepoxyflooring.com) deals with a coastal Atlantic climate where humidity, not just temperature, sets the installation calendar, since damp air slows cure and raises the risk of moisture getting trapped under a coating that looks dry on the surface. It's a useful comparison for anyone assuming cold is the only variable that matters. A more direct comparison sits closer to home: [Chatham Epoxy Flooring](https://chathamepoxyflooring.com), working the same general Lake Erie-influenced Southwestern Ontario weather pattern Woodstock sees, faces a nearly identical booking calendar and the same freeze-thaw brine exposure once winter sets in.
+A coastal Atlantic climate deals with a different problem entirely: humidity, not just temperature, sets the installation calendar there, since damp air slows cure and raises the risk of moisture getting trapped under a coating that looks dry on the surface. It's a useful comparison for anyone assuming cold is the only variable that matters. A more direct comparison sits closer to home: other Lake Erie-influenced Southwestern Ontario towns face a nearly identical booking calendar and the same freeze-thaw brine exposure once winter sets in.
 
 If you're planning a garage floor for next year, the best time to get a quote locked in is well before the fall booking window opens.
 
