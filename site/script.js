@@ -311,7 +311,7 @@
             if (success) {
               success.classList.add('is-visible');
               success.innerHTML = '<div><strong>Something went wrong.</strong>' +
-                'Please call us at <a href="tel:+12892068039">+1 289-206-8039</a> and we will take your details by phone.</div>';
+                'Please call us at <a href="tel:+12262423625">+1 226-242-3625</a> and we will take your details by phone.</div>';
             }
           })
           .then(function () {
