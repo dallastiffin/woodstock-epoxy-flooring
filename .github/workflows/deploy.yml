@@ -1,0 +1,32 @@
+name: Deploy to Cloudflare
+
+# Added Sept 30 2026: the Cloudflare Git integration stopped picking up
+# pushes to this repo, so deploys now run from GitHub Actions like the
+# newer sites. Safe to run alongside the Git integration if it recovers.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy Worker (static assets)
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: d287eeed1449fbe3d6f65c513663cb99
+          command: deploy
+
+      - name: Keep custom domain attached
+        run: |
+          curl -s -o /tmp/attach.json -w "HTTP %{http_code}\n" -X PUT "https://api.cloudflare.com/client/v4/accounts/d287eeed1449fbe3d6f65c513663cb99/workers/domains" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{"hostname":"woodstockepoxyflooring.com","service":"woodstock-epoxy-flooring","zone_name":"woodstockepoxyflooring.com"}'
+          cat /tmp/attach.json; echo
