@@ -114,7 +114,7 @@ Epoxy flooring performs differently on a fifty-year-old pour than it does on a s
 
 Square footage, the slab's current condition, and the system you pick are what set the price. A typical two-car garage in decent shape falls into a predictable range, and larger commercial floors run less per square foot as the area grows.
 
-Repair is the variable that moves the number most. Heavy cracking, old failed paint, or pitting adds grinding and patching time that a clean slab never needs. We walk the space in person and hand you a fixed figure in writing, so the number at the quote is the number you pay.
+Repair is the variable that moves the number most. Heavy cracking, old failed paint, or pitting adds grinding and patching time that a clean slab never needs. We walk the space in person and hand you a fixed figure in writing, so the number at the quote is the number you pay. For a ballpark first, try our [instant price estimator](price-estimator.html).
 
 ## What Happens During Installation?
 
@@ -232,7 +232,7 @@ Foot traffic is generally fine around 12 hours after the final coat, with vehicl
 
 ## What Does Epoxy Flooring For A Garage Cost?
 
-The size of the garage, the shape the slab is in, and the system chosen all move the price. A standard two-car garage in reasonable condition sits in a predictable range; heavy crack repair or stripping old paint adds time and shifts the number upward. We measure in person and confirm a fixed figure in writing before booking anything.
+The size of the garage, the shape the slab is in, and the system chosen all move the price. A standard two-car garage in reasonable condition sits in a predictable range; heavy crack repair or stripping old paint adds time and shifts the number upward. We measure in person and confirm a fixed figure in writing before booking anything. Want a number right now? Our [price estimator](price-estimator.html) gives you a range in about a minute.
 
 ## Book A Free Garage Floor Coating Estimate
 

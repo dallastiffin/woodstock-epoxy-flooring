@@ -247,6 +247,13 @@
       });
   }
 
+  /* Shared with estimator.js so every lead goes out the same way.
+     It adds the site key here, so callers never need to know it. */
+  window.siteSubmitLead = function (data) {
+    data.site = SITE_KEY;
+    return submitLead(data);
+  };
+
   function initForms() {
     var forms = document.querySelectorAll('.lead-form');
     if (!forms.length) return;

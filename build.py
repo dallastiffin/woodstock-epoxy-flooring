@@ -436,6 +436,7 @@ def header(active):
           </ul>
         </li>
         <li><a class="nav__link" href="about.html"{cls('about.html')}>About</a></li>
+        <li><a class="nav__link" href="price-estimator.html"{cls('price-estimator.html')}>Price Estimator</a></li>
         <li><a class="nav__link" href="faq.html"{cls('faq.html')}>FAQ</a></li>
         <li><a class="nav__link" href="contact.html"{cls('contact.html')}>Contact</a></li>
       </ul>
@@ -644,7 +645,7 @@ SIDEBAR = f"""
           <p><a class="footer-phone" style="color:var(--color-accent-dark) !important;" href="tel:{PHONE_HREF}">{PHONE_DISPLAY}</a></p>
           <div class="btn-row">
             <a class="btn btn--primary btn--block" href="#quote">Get a Free Quote</a>
-            <a class="btn btn--outline btn--block" href="contact.html">Contact Us Today</a>
+            <a class="btn btn--outline btn--block" href="price-estimator.html">Get An Instant Price</a>
           </div>
         </div>
         <div class="panel" style="margin-top:var(--space-5);">
@@ -678,6 +679,7 @@ def footer():
         <ul class="footer-list">
           <li><a href="index.html">Home</a></li>
           <li><a href="services.html">Services</a></li>
+          <li><a href="price-estimator.html">Price Estimator</a></li>
           <li><a href="about.html">About Us</a></li>
           <li><a href="faq.html">FAQ</a></li>
           <li><a href="contact.html">Contact</a></li>
@@ -1177,7 +1179,7 @@ home += f"""
       </ul>
       <div class="btn-row">
         <a class="btn btn--primary btn--lg" href="tel:{PHONE_HREF}">Call Now: {PHONE_DISPLAY}</a>
-        <a class="btn btn--ghost btn--lg" href="#services">See Our Services</a>
+        <a class="btn btn--ghost btn--lg" href="price-estimator.html">Get An Instant Price</a>
       </div>
     </div>
 
@@ -1738,6 +1740,215 @@ for slug, idx, label in GUIDE_PAGES:
 # ============================================================================
 #  PLACEHOLDER IMAGES  (lightweight inline SVG so the site is never broken)
 # ============================================================================
+#  INSTANT PRICE ESTIMATOR  (/price-estimator)
+#  Markup only. The maths, validation and lead delivery live in
+#  site/estimator.js; its PRICING block is the one place to change numbers.
+# ============================================================================
+def est_choice(name, value, label, note="", checked=False):
+    small = f"<small>{note}</small>" if note else ""
+    chk = " checked" if checked else ""
+    return (f'            <label class="est-choice"><input type="radio" name="{name}" value="{value}"{chk}>'
+            f'<span>{label}{small}</span></label>')
+
+est_crumbs, est_crumb_ld = breadcrumbs([("Home", "index.html"), ("Price Estimator", None)])
+est_title = f"Epoxy Flooring Cost Estimator | {CITY} Price In 60 Seconds"
+est_meta = (f"Get an instant epoxy flooring price range for your {CITY} garage, basement or shop. "
+            f"Pick your space, floor system and slab condition. Free, no obligation.")
+est_ld = est_crumb_ld + "\n<script type=\"application/ld+json\">\n" + json.dumps({
+    "@context": "https://schema.org", "@type": "WebApplication",
+    "name": f"{BUSINESS} Price Estimator", "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any", "url": DOMAIN + public_url("price-estimator.html"),
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CAD"},
+    "provider": {"@id": DOMAIN + "/#business"}}, indent=2) + "\n</script>"
+
+est = head(est_title, est_meta, "price-estimator.html", est_ld)
+est = est.replace(f'<script src="{asset_v("script.js")}" defer></script>',
+                  f'<script src="{asset_v("script.js")}" defer></script>\n'
+                  f'<script src="{asset_v("estimator.js")}" defer></script>')
+est += header("price-estimator.html")
+est += est_crumbs
+est += f"""
+<main id="main">
+
+<section class="hero hero--page" aria-labelledby="hero-heading">
+  <div class="container hero__inner">
+    <div class="hero__intro">
+      <span class="eyebrow" style="color:#ffb37a;">Instant Price Estimate</span>
+      <h1 id="hero-heading">Epoxy Flooring Cost Estimator For {CITY} And {REGION}</h1>
+      <p>Answer four quick questions and see a price range for your floor in about a minute.
+        No site visit needed to get a ballpark. When you are ready, we measure in person and
+        give you a fixed price in writing.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="est-heading">
+  <div class="container container--narrow">
+    <h2 id="est-heading" class="visually-hidden">Price estimator</h2>
+    <div class="form-wrap estimator-wrap">
+
+      <form id="est-form" class="estimator" action="#" method="post" novalidate
+            data-source="Price Estimator" aria-labelledby="est-heading">
+
+        <fieldset>
+          <legend>1. What are we coating?</legend>
+          <div class="est-choices">
+{est_choice("space", "garage", "Garage")}
+{est_choice("space", "basement", "Basement")}
+{est_choice("space", "commercial", "Shop or commercial")}
+{est_choice("space", "patio", "Patio or porch")}
+{est_choice("space", "other", "Something else")}
+          </div>
+          <span class="est-error" data-error="space" aria-live="polite"></span>
+
+          <div data-show="garage-size" hidden style="margin-top:var(--space-5);">
+            <p class="est-sub" style="margin-top:0;"><strong>How big is the garage?</strong></p>
+            <div class="est-choices">
+{est_choice("garage_size", "one", "1-car", "about 250 sq ft")}
+{est_choice("garage_size", "two", "2-car", "about 450 sq ft")}
+{est_choice("garage_size", "three", "3-car", "about 650 sq ft")}
+{est_choice("garage_size", "custom", "I know the size", "enter square feet")}
+            </div>
+            <span class="est-error" data-error="garage_size" aria-live="polite"></span>
+          </div>
+
+          <div class="field est-sqft" data-show="sqft" hidden>
+            <label for="est-sqft">Floor size in square feet</label>
+            <input type="number" id="est-sqft" name="sqft" inputmode="numeric" min="50" step="10"
+                   placeholder="e.g. 600">
+            <small style="color:var(--color-text-muted);">Length x width. A 20 ft x 30 ft room is 600 sq ft.</small>
+            <span class="est-error" data-error="sqft" aria-live="polite"></span>
+          </div>
+
+          <p class="est-note" data-show="patio-note" hidden>Outdoor slabs get a polyaspartic
+            system. It stays clear in sunlight, where epoxy turns yellow, so the estimate uses
+            polyaspartic pricing.</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>2. Which floor system?</legend>
+          <p class="est-sub">Not sure? Leave it on our pick. We will walk you through the options at the measure.</p>
+          <div class="est-choices est-choices--wide">
+{est_choice("system", "auto", "Recommend one for me", "our usual pick for your space", checked=True)}
+{est_choice("system", "flake", "Flake epoxy", "most popular for garages, hides dirt")}
+{est_choice("system", "poly", "Polyaspartic flake", "one-day install, UV stable")}
+{est_choice("system", "solid", "Solid colour epoxy", "clean look, lowest cost")}
+{est_choice("system", "metallic", "Metallic epoxy", "marbled showroom finish")}
+{est_choice("system", "quartz", "Quartz", "extra grip for wet or busy floors")}
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>3. What shape is the concrete in?</legend>
+          <div class="est-choices est-choices--wide">
+{est_choice("condition", "good", "Good shape", "few or no cracks, no old coating")}
+{est_choice("condition", "minor", "Some cracks or pitting", "salt damage, small cracks")}
+{est_choice("condition", "heavy", "Rough or already coated", "big cracks, peeling paint or old epoxy")}
+{est_choice("condition", "unsure", "Not sure", "we will check at the measure", checked=True)}
+          </div>
+          <label class="est-check" data-show="stem" hidden>
+            <input type="checkbox" id="est-stem" name="stem">
+            <span>Also coat the stem walls or curb along the garage edge</span>
+          </label>
+          <label class="est-check" data-show="moisture" hidden>
+            <input type="checkbox" id="est-moisture" name="moisture">
+            <span>Add a moisture-block primer (a good idea on basement slabs that feel damp or show white powder)</span>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>4. Where should we send your price?</legend>
+          <p class="est-sub">Your range shows on the next screen. We will also call to answer questions and book a free measure if you want one.</p>
+          <div class="form-grid">
+            <div class="field">
+              <label for="est-name">Name <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="est-name" name="name" autocomplete="name" required>
+              <span class="est-error" data-error="name" aria-live="polite"></span>
+            </div>
+            <div class="field">
+              <label for="est-phone">Phone <span class="req" aria-hidden="true">*</span></label>
+              <input type="tel" id="est-phone" name="phone" autocomplete="tel" placeholder="519-000-0000" required>
+              <span class="est-error" data-error="phone" aria-live="polite"></span>
+            </div>
+            <div class="field">
+              <label for="est-email">Email</label>
+              <input type="email" id="est-email" name="email" autocomplete="email" placeholder="optional">
+              <span class="est-error" data-error="email" aria-live="polite"></span>
+            </div>
+            <div class="field">
+              <label for="est-city">Town</label>
+              <input type="text" id="est-city" name="city" autocomplete="address-level2" value="{CITY}">
+            </div>
+            <div class="field field--full">
+              <label for="est-notes">Anything else we should know?</label>
+              <textarea id="est-notes" name="notes" rows="2" placeholder="Optional: timing, colours you like, cars that need to be out by a date"></textarea>
+            </div>
+            <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
+              <label for="est-botcheck">Leave this field empty</label>
+              <input type="text" id="est-botcheck" name="botcheck" tabindex="-1" autocomplete="off">
+            </div>
+            <div class="field field--full">
+              <button class="btn btn--primary btn--lg btn--block" type="submit">Show My Price</button>
+              <p class="form-note">Free and no obligation. The range is a guide, not a quote. Your final price is fixed in writing after we measure.</p>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+
+      <div id="est-result" class="est-result" hidden aria-live="polite">
+        <p class="est-result__label">Your estimated price</p>
+        <p class="est-result__range" data-out="range"></p>
+        <ul class="est-result__details" data-out="details"></ul>
+        <div class="est-result__msg">
+          <p data-out="sent"><strong>Thanks, we have your details.</strong> Expect a call within one business day to talk through the range and book a free on-site measure. Want it sooner? Call <a href="tel:{PHONE_HREF}">{PHONE_DISPLAY}</a>.</p>
+          <p data-out="failed" hidden><strong>Your price is above, but your details did not reach us.</strong> Please call <a href="tel:{PHONE_HREF}">{PHONE_DISPLAY}</a> to book your free measure.</p>
+          <p style="font-size:var(--fs-sm);color:var(--color-text-muted);">This range is based on your answers and typical {CITY}-area pricing. The final number depends on what we find when we grind and test the slab, and it is fixed in writing before any work is booked.</p>
+        </div>
+        <div class="btn-row is-centered">
+          <a class="btn btn--primary btn--lg" href="tel:{PHONE_HREF}">Call Now: {PHONE_DISPLAY}</a>
+          <button class="btn btn--outline btn--lg" type="button" data-action="edit">Change My Answers</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt" aria-labelledby="est-how-heading">
+  <div class="container container--narrow prose">
+    <h2 id="est-how-heading">What Sets The Price Of Epoxy Flooring In {CITY}?</h2>
+    <p>Three things move the number: the size of the floor, the system you pick, and the shape the concrete is in.
+      Bigger floors cost less per square foot because setup time is spread over more area.</p>
+    <p>Prep is where cheap jobs cut corners. Every floor we coat gets diamond ground first so the coating bonds to the
+      concrete instead of sitting on top of it. Cracks, pitting from road salt, and old paint or epoxy all add grinding
+      and patching time, which is why slab condition matters so much.</p>
+    <table class="est-price-table">
+      <caption class="visually-hidden">Typical installed price per square foot by floor system</caption>
+      <thead><tr><th scope="col">Floor system</th><th scope="col">Typical installed price</th></tr></thead>
+      <tbody>
+        <tr><td>Solid colour epoxy</td><td>$4 to $7 per sq ft</td></tr>
+        <tr><td>Flake epoxy</td><td>$5 to $9 per sq ft</td></tr>
+        <tr><td>Polyaspartic flake (one-day)</td><td>$6 to $12 per sq ft</td></tr>
+        <tr><td>Quartz (slip-resistant)</td><td>$7 to $11 per sq ft</td></tr>
+        <tr><td>Metallic epoxy</td><td>$9 to $16 per sq ft</td></tr>
+      </tbody>
+    </table>
+    <p>Most small jobs have a minimum charge, because a one-car garage takes nearly the same setup as a two-car.
+      A quote far under $3 per square foot usually means the grinding or the coating thickness has been skipped.</p>
+    <p>Want to talk it through instead? Call <a href="tel:{PHONE_HREF}">{PHONE_DISPLAY}</a> or see our
+      <a href="garage-floor-coating.html">garage floor coating</a> and <a href="services.html">other services</a>.</p>
+  </div>
+</section>
+
+{cta_band("Prefer A Fixed Price In Writing?", "We measure in person, test the slab and hand you a written price before anything is booked.", 1)}
+
+{contact_form("Price Estimator page")}
+</main>
+"""
+est += footer()
+write("price-estimator.html", est)
+
+# ============================================================================
 # Logo, favicon and social images are all real artwork now, produced from
 # Logo.png by tools/make-logo.py. Nothing here generates placeholders.
 
@@ -1746,7 +1957,7 @@ for slug, idx, label in GUIDE_PAGES:
 # ============================================================================
 # privacy-policy and terms are noindex, so they are deliberately absent here
 all_pages = ["index.html", "services.html"] + [s for s, _, _ in SERVICE_PAGES] + \
-            ["about.html", "faq.html", "contact.html"] + [s for s, _, _ in GUIDE_PAGES]
+            ["price-estimator.html", "about.html", "faq.html", "contact.html"] + [s for s, _, _ in GUIDE_PAGES]
 urls = "\n".join(
     f"""  <url>
     <loc>{DOMAIN}{public_url(p)}</loc>
